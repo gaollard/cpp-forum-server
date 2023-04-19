@@ -10,6 +10,7 @@
 #include <event2/http_compat.h>
 #include <event2/util.h>
 #include <signal.h>
+#include "./include/db_query.h"
 
 #define LOG_INFO    printf
 #define LOG_DBG    printf
@@ -41,6 +42,8 @@ void signal_handler(int sig) {
 }
 
 int main(int argc, char *argv[]) {
+
+    db_query();
 
     //自定义信号处理函数
     signal(SIGHUP   , signal_handler);
