@@ -1,0 +1,3 @@
+/Users/xiong.gao/CLionProjects/libevent-demo/cmake-build-debug/CMakeFiles/libevent_demo.dir
+/Users/xiong.gao/CLionProjects/libevent-demo/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/xiong.gao/CLionProjects/libevent-demo/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,10 @@
+# ninja log v5
+0	161	1681868508822137883	CMakeFiles/libevent_demo.dir/main.cpp.o	f9092cacf4c7e8c5
+2	96	1681868544949923340	libevent_demo	a4cf6f071b3e4e25
+0	142	1681868915835965825	build.ninja	42016af76bb9c289
+3	133	1681869054347803378	CMakeFiles/libevent_demo.dir/login_handler.cpp.o	6dcbe8b434e5168a
+2	137	1681869054352831189	CMakeFiles/libevent_demo.dir/main.cpp.o	f9092cacf4c7e8c5
+2	131	1681869097852422594	CMakeFiles/libevent_demo.dir/main.cpp.o	f9092cacf4c7e8c5
+131	210	1681869097931824245	libevent_demo	d08df63d796c0922
+3	155	1681869128276457425	CMakeFiles/libevent_demo.dir/login_handler.cpp.o	6dcbe8b434e5168a
+155	247	1681869128368787205	libevent_demo	d08df63d796c0922
