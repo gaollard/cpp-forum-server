@@ -33,13 +33,13 @@ void login_handler(struct evhttp_request *req, void *arg) {
 
     sprintf(tmp, "uri=%s\n", req->uri);
     strcat(output, tmp);
-    //decoded uri
+    // decoded uri
     char *decoded_uri;
     decoded_uri = evhttp_decode_uri(uri);
     sprintf(tmp, "decoded_uri=%s\n", decoded_uri);
     strcat(output, tmp);
 
-    //解析URI的参数(即GET方法的参数)
+    // 解析URI的参数(即GET方法的参数)
     struct evkeyvalq params;
     //将URL数据封装成key-value格式,q=value1, s=value2
     evhttp_parse_query(decoded_uri, &params);
@@ -52,7 +52,7 @@ void login_handler(struct evhttp_request *req, void *arg) {
 
     free(decoded_uri);
 
-    //获取POST方法的数据
+    // 获取POST方法的数据
     char *post_data = (char *) EVBUFFER_DATA(req->input_buffer);
     sprintf(tmp, "post_data=%s\n", post_data);
     strcat(output, tmp);
@@ -67,7 +67,7 @@ void login_handler(struct evhttp_request *req, void *arg) {
     // 输出的内容
     struct evbuffer *buf;
     buf = evbuffer_new();
-    evbuffer_add_printf(buf, "It works haha!\n%s\n", output);
+    evbuffer_add_printf(buf, "hello world\n%s\n", output);
     evhttp_send_reply(req, HTTP_OK, "OK", buf);
     evbuffer_free(buf);
 }
