@@ -10,7 +10,7 @@
 #include <event2/http_struct.h>
 #include "../../include/utils/send.h"
 
-void login_handler(struct evhttp_request *req, void *arg) {
+void get_user_info_handler(struct evhttp_request *req, void *arg) {
     char output[2048] = "\0";
     char tmp[1024];
 
@@ -20,6 +20,6 @@ void login_handler(struct evhttp_request *req, void *arg) {
     strcat(output, tmp);
 
     // 输出的内容
-    char content[] = "login route";
+    char content[] = "{\"user\":\"name\"}";
     send(req, content);
 }

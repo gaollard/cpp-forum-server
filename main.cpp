@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-// for struct evkeyvalq
 #include <sys/queue.h>
 #include <event.h>
 #include <event2/http.h>
@@ -16,7 +15,9 @@
 #define LOG_DBG    printf
 #define LOG_ERR    printf
 
-#include "./include/login_handler.h";
+#include "include/routes/login_handler.h";
+#include "include/routes/get_user_info_handler.h"
+#include "include/routes/generic_handler.h"
 
 void show_help() {
     char *help = "http://localhost:8080\n"
@@ -43,7 +44,7 @@ void signal_handler(int sig) {
 
 int main(int argc, char *argv[]) {
 
-    db_query();
+//    db_query();
 
     //自定义信号处理函数
     signal(SIGHUP   , signal_handler);
@@ -106,10 +107,14 @@ int main(int argc, char *argv[]) {
     httpd = evhttp_start(httpd_option_listen, httpd_option_port);
     evhttp_set_timeout(httpd, httpd_option_timeout);
 
-    //指定generic callback
-    evhttp_set_gencb(httpd, login_handler, NULL);
-    //也可以为特定的URI指定callback
-    //evhttp_set_cb(httpd, "/", specific_handler, NULL);
+    // 指定 generic callback
+    evhttp_set_gencb(httpd, generic_handler, NULL);
+
+    // 也可以为特定的URI指定callback
+    evhttp_set_cb(httpd, "/login", login_handler, NULL);
+
+    // 也可以为特定的URI指定callback
+    evhttp_set_cb(httpd, "/get_user_info", get_user_info_handler, NULL);
 
     //开始事件监听，分发
     event_dispatch();
