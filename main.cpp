@@ -9,6 +9,8 @@
 #include <event2/util.h>
 #include <signal.h>
 #include "./include/_mysql.h"
+#include "./src/db/mysql_wrapper.h"
+#include <iostream>
 #include <vector>;
 
 #define LOG_INFO    printf
@@ -47,9 +49,11 @@ void signal_handler(int sig) {
     }
 }
 
-int main(int argc, char *argv[]) {
+void my_query() {
 
-//    db_query();
+}
+
+int db_test_01 () {
     connection conn; // 数据库连接类
 
     // 登录数据库，返回值：0-成功，其它-失败。
@@ -101,6 +105,28 @@ int main(int argc, char *argv[]) {
     for(std::vector<user>::iterator it = users.begin(); it != users.end();it++) {
         printf("id=%ld, name=%s \n",it->id,it->name);
     }
+}
+
+void db_test_02 () {
+    db::DbConf::Conf_ db_conf;
+    db_conf.host = "175.178.48.236";
+    db_conf.port = 3306;
+    db_conf.db_name = "test";
+    db_conf.user = "gaollard";
+    db_conf.password = "gaoxiong123.";
+//    conf.char_set = "11";
+    db::MysqlWrapper wrapper(db::DbConf::DB_CONN_RW);
+
+    int res = wrapper.connect(db_conf);
+    std::cout << res;
+}
+
+int main(int argc, char *argv[]) {
+
+    // db_query();
+    // db_test_01();
+    db_test_02();
+    return 0;
 
     //自定义信号处理函数
     signal(SIGHUP   , signal_handler);
