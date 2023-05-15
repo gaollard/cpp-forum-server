@@ -2,3 +2,5 @@
 
 - libevent
 - mysqlclient
+- rapidjson
+- boost
