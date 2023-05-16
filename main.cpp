@@ -114,11 +114,18 @@ void db_test_02 () {
     db_conf.db_name = "test";
     db_conf.user = "gaollard";
     db_conf.password = "gaoxiong123.";
-//    conf.char_set = "11";
+    db_conf.conn_pool_size = 10;
     db::MysqlWrapper wrapper(db::DbConf::DB_CONN_RW);
 
     int res = wrapper.connect(db_conf);
-    std::cout << res;
+
+    std::vector< std::map<std::string, std::string> > map;
+    wrapper.SelectQuery("select * from user", map);
+
+    std::cout << map.at(0).at("name");
+    std::cout << map.at(0).at("id");
+
+    std::cout << res << std::endl;
 }
 
 int main(int argc, char *argv[]) {

@@ -1,5 +1,5 @@
 /*********************************************
- *  Copyright(c) 2019 huishoubao.com.cn
+ *  Copyright(c) 2019
  *  All rights reserved.
  *  Author: Palmer
  ********************************************/
@@ -12,14 +12,13 @@
 #include <memory>
 #include "db_conf.h"
 #include "mysql_wrapper.h"
-//#include "../util/singleton.h"
 
 namespace db {
 
 /*
  * the database connection pool Singleton, it contains a read & write connection pool and a read only connection pool.
  */
-class DbConnPool : public util::Singleton<DbConnPool> {
+class DbConnPool {
 public:
 	//the pool should be initialized only once
 	int init(const DbConf::Conf& rw_db_conf, const DbConf::Conf& rd_db_conf);
@@ -41,7 +40,11 @@ public:
 	/* no any instance */
 	DbConnPool() ;
 	~DbConnPool();
-
+	/* instance */
+	static DbConnPool* getInstance() {
+		static DbConnPool pool;
+		return &pool;
+	}
 private:
 	/* class uncopyable */
 	DbConnPool(const DbConnPool&);

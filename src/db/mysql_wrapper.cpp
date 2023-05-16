@@ -1,10 +1,10 @@
 /*********************************************
- *  Copyright(c) 2019 huishoubao.com.cn
+ *  Copyright(c) 2019
  *  All rights reserved.
  *  Author: Palmer
  ********************************************/
 #include <iostream>
-#include "mysql_wrapper.h"
+#include "./mysql_wrapper.h"
 
 namespace db {
 
@@ -28,6 +28,7 @@ int MysqlWrapper::connect(const DbConf::Conf& db_conf) {
 	std::lock_guard<std::mutex> lock(mutex_mysql_conn_);
 	mysql_thread_init();
 	if(mysql_init(&sql_conn_) == NULL) {
+        std::cout << "connect error" << std::endl;
 		return -1;
 	}
 	/*
@@ -41,6 +42,7 @@ int MysqlWrapper::connect(const DbConf::Conf& db_conf) {
 		mysql_options(&sql_conn_, MYSQL_SET_CHARSET_NAME, db_conf.char_set.c_str()); //set the charset
 	}
 	if(mysql_real_connect(&sql_conn_, db_conf.host.c_str(), db_conf.user.c_str(), db_conf.password.c_str(), db_conf.db_name.c_str(), db_conf.port, NULL, 0) == NULL) {
+        std::cout << "mysql_real_connect error" << std::endl;
 		return -1;
 	}
 	return 0;
@@ -174,7 +176,7 @@ int MysqlWrapper::BlobSelectQuery(const std::string& sql, std::vector< std::map<
  * MySQL transaction
  */
 int MysqlWrapper::StartTransaction() {
-	my_bool OFF = 0;
+	bool OFF = 0;
 	if(mysql_autocommit(&sql_conn_, OFF) != 0) {
 		return -1;
 	}
@@ -196,7 +198,7 @@ int MysqlWrapper::rollback() {
 }
 
 int MysqlWrapper::EndTransaction() {
-	my_bool ON = 1;
+	bool ON = 1;
 	if(mysql_autocommit(&sql_conn_, ON) != 0) {
 		return -1;
 	}
