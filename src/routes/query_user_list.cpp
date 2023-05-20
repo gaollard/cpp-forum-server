@@ -2,8 +2,7 @@
 // Created by Xiong Gao on 2023/4/20.
 //
 
-#include <stdio.h>
-#include <string.h>
+#include "json/json.h"
 #include <vector>
 #include <iostream>
 #include <event.h>
@@ -27,9 +26,25 @@ void db_test_02 () {
 }
 
 void query_user_list(struct evhttp_request *req, void *arg) {
-    char tmp[1024];
-    std::vector<std::map<std::string, std::string> > list;
-    db::DbConnPool::getInstance()->GetConn(db::DbConf::DbConnType::DB_CONN_RW)->SelectQuery("select * from user", list);
-    sprintf(tmp, "{\"total\": %d}", list.size());
-    send(req, tmp);
+    std::vector<std::map<std::string, std::string> > s_list;
+    db::DbConnPool::getInstance()->GetConn(db::DbConf::DbConnType::DB_CONN_RW)->SelectQuery("select * from user", s_list);
+
+    Json::Value root;
+    Json::Value list;
+    root["count"] = (int)s_list.size();
+
+    for (std::vector<std::map<std::string, std::string>>::iterator it = s_list.begin(); it != s_list.end(); it++)
+    {
+        Json::Value data;
+        data["name"] = it->at("name");
+        data["age"] = atoi(it->at("id").c_str());
+        list.append(data);
+    }
+    root["list"] = list;
+
+    Json::StreamWriterBuilder builder;
+    builder["indentation"] = "";
+    std::string json_string = Json::writeString(builder, root);
+
+    send(req, json_string.data());
 }
