@@ -12,6 +12,7 @@
 #include "./src/db/mysql_wrapper.h"
 #include <iostream>
 #include <vector>;
+#include "src/db/db_conn_pool.h"
 
 #define LOG_INFO    printf
 #define LOG_DBG    printf
@@ -108,6 +109,7 @@ int db_test_01 () {
 }
 
 void db_test_02 () {
+    // 连接配置
     db::DbConf::Conf_ db_conf;
     db_conf.host = "175.178.48.236";
     db_conf.port = 3306;
@@ -115,17 +117,16 @@ void db_test_02 () {
     db_conf.user = "gaollard";
     db_conf.password = "gaoxiong123.";
     db_conf.conn_pool_size = 10;
-    db::MysqlWrapper wrapper(db::DbConf::DB_CONN_RW);
 
-    int res = wrapper.connect(db_conf);
+    // 创建连接池
+    db::DbConnPool::getInstance()->init(db_conf, db_conf);
 
+    // 查询
     std::vector< std::map<std::string, std::string> > map;
-    wrapper.SelectQuery("select * from user", map);
-
-    std::cout << map.at(0).at("name");
-    std::cout << map.at(0).at("id");
-
-    std::cout << res << std::endl;
+    db::DbConnPool::getInstance()->GetConn(db::DbConf::DbConnType::DB_CONN_RW)->SelectQuery("select * from user", map);
+    std::cout << map.size() << std::endl;
+    std::cout << "  ID: " << map.at(0).at("id") << std::endl;
+    std::cout << "Name: " << map.at(0).at("name") << std::endl;
 }
 
 int main(int argc, char *argv[]) {
@@ -133,6 +134,7 @@ int main(int argc, char *argv[]) {
     // db_query();
     // db_test_01();
     db_test_02();
+
     return 0;
 
     //自定义信号处理函数

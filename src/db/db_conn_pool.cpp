@@ -5,6 +5,7 @@
  ********************************************/
 
 #include "db_conn_pool.h"
+#include "iostream"
 
 namespace db {
 
@@ -64,7 +65,9 @@ int DbConnPool::init(const DbConf::Conf& rw_db_conf, const DbConf::Conf& rd_db_c
 
 //get a database connection from the pool
 std::shared_ptr<MysqlWrapper> DbConnPool::GetConn(DbConf::DbConnType db_conn_type) {
+        std::cout << "type: " << db_conn_type << std::endl;
 	if(db_conn_type == DbConf::DB_CONN_RW) {
+        std::cout << "size: " << rw_db_conf_.conn_pool_size << std::endl;
 		if(rw_db_conf_.conn_pool_size > 0) {
 			return GetRwConn();
 		} else {
