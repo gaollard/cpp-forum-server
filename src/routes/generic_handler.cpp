@@ -3,18 +3,11 @@
 //
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
 
-#include <sys/queue.h>
 #include <event.h>
 #include <event2/http.h>
 #include <event2/http_struct.h>
-#include <event2/http_compat.h>
-#include <event2/util.h>
-#include <signal.h>
-#include "../../include/common.h"
 #include "../../include/utils/send.h"
 
 void generic_handler(struct evhttp_request *req, void *arg) {
