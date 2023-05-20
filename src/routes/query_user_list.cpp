@@ -16,15 +16,11 @@ typedef struct user {
     char name[30];
 } user;
 
-void db_test_02 () {
-    // 查询
-    std::vector<std::map<std::string, std::string> > map;
-    db::DbConnPool::getInstance()->GetConn(db::DbConf::DbConnType::DB_CONN_RW)->SelectQuery("select * from user", map);
-    std::cout << map.size() << std::endl;
-    std::cout << "  ID: " << map.at(0).at("id") << std::endl;
-    std::cout << "Name: " << map.at(0).at("name") << std::endl;
-}
-
+/**
+ * 查询用户列表
+ * @param req
+ * @param arg
+ */
 void query_user_list(struct evhttp_request *req, void *arg) {
     std::vector<std::map<std::string, std::string> > s_list;
     db::DbConnPool::getInstance()->GetConn(db::DbConf::DbConnType::DB_CONN_RW)->SelectQuery("select * from user", s_list);
