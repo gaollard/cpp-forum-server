@@ -13,10 +13,11 @@
 
 #define LOG_INFO    printf
 
-#include "include/routes/login_handler.h";
-#include "include/routes/get_user_info_handler.h";
-#include "include/routes/generic_handler.h";
-#include "include/routes/query_user_list.h";
+#include "src/routes/login_handler.h";
+#include "src/routes/get_user_info_handler.h";
+#include "src/routes/generic_handler.h";
+#include "src/routes/query_user_list.h";
+#include "src/routes/register_action.h";
 
 void show_help() {
     char *help = "http://localhost:8080\n"
@@ -57,8 +58,6 @@ void init_db() {
 
 int main(int argc, char *argv[]) {
 
-    // db_query();
-    // db_test_01();
     init_db();
 
     //自定义信号处理函数
@@ -112,12 +111,10 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    /* 使用libevent创建HTTP Server */
-
-    //初始化event API
+    // 初始化 event API
     event_init();
 
-    //创建一个http server
+    // 创建一个http server
     struct evhttp *httpd;
     httpd = evhttp_start(httpd_option_listen, httpd_option_port);
     evhttp_set_timeout(httpd, httpd_option_timeout);
@@ -125,12 +122,16 @@ int main(int argc, char *argv[]) {
     // 指定 generic callback
     evhttp_set_gencb(httpd, generic_handler, NULL);
 
-    // 也可以为特定的URI指定callback
-    evhttp_set_cb(httpd, "/login", login_handler, NULL);
+    // 登录
+    evhttp_set_cb(httpd, "/account/user_login", login_handler, NULL);
 
-    // 也可以为特定的URI指定callback
+    // 注册
+    evhttp_set_cb(httpd, "/account/register", register_action, NULL);
+
+    // 查询用户信息
     evhttp_set_cb(httpd, "/get_user_info", get_user_info_handler, NULL);
 
+    // 查询用户列表
     evhttp_set_cb(httpd, "/query_user_list", query_user_list, NULL);
 
     //开始事件监听，分发
