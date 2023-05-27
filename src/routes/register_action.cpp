@@ -10,6 +10,14 @@
 #include "json/json.h"
 #include "../db/db_conn_pool.h"
 #include "string"
+#include "../utils/response_error.h"
+
+int query_by_name(std::string name, std::map<std::string, std::string> &s_map) {
+    std::stringstream sql_query;
+    sql_query << "select * from user where name = '" <<  name << "';";
+    int res = db::DbConnPool::getInstance()->GetConn(db::DbConf::DbConnType::DB_CONN_RW)->SelectSingleLineQuery(sql_query.str(), s_map);
+    return res;
+}
 
 void register_action(struct evhttp_request *req, void *arg) {
     // 获取POST方法的数据
@@ -20,7 +28,19 @@ void register_action(struct evhttp_request *req, void *arg) {
 
     if (!jsReader.parse(post_data , jsonData))
     {
-        std::cout << "parse body error" << std::endl;
+        response_error(req, "parse body error");
+        return;
+    }
+
+    std::map<std::string, std::string> s_map;
+    int check_name_res =  query_by_name(jsonData["account"].asString(), s_map);
+    if (check_name_res == 0) {
+        if (!s_map.at("name").empty()) {
+            response_error(req, "account already exist");
+            return;
+        }
+    } else {
+        response_error(req, "query error");
         return;
     }
 
@@ -35,10 +55,7 @@ void register_action(struct evhttp_request *req, void *arg) {
 
     if (rows == 1) {
         std::cout << "注册成功" << std::endl;
-        std::map<std::string, std::string> s_map;
-        std::stringstream sql_query;
-        sql_query << "select * from user where name = '" <<  jsonData["account"].asString() << "';";
-        int res = db::DbConnPool::getInstance()->GetConn(db::DbConf::DbConnType::DB_CONN_RW)->SelectSingleLineQuery(sql_query.str(), s_map);
+        int res = query_by_name(jsonData["account"].asString(), s_map);
         if (res == 0) {
             root["err_no"] = 0;
             data["id"] = atoi(s_map.at("id").c_str());

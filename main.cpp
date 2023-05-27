@@ -118,6 +118,7 @@ int main(int argc, char *argv[]) {
     struct evhttp *httpd;
     httpd = evhttp_start(httpd_option_listen, httpd_option_port);
     evhttp_set_timeout(httpd, httpd_option_timeout);
+//    evhttp_request_set_error_cb(httpd, )
 
     // 指定 generic callback
     evhttp_set_gencb(httpd, generic_handler, NULL);
