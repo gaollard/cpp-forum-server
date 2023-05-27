@@ -21,7 +21,7 @@ curl -X POST localhost:8080/account/login \
 --data-raw '{"account": "admin", "password": "123456"}'
 ```
 
-### register_action 注册
+### 3、register_action 注册
 ```shell
 curl -X POST localhost:8080/account/register \
 --data-raw '{"account": "admin", "password": "123456"}'
