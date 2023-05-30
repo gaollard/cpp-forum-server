@@ -8,6 +8,7 @@
 - boost
 - 数据库连接池
 - https://github.com/sewenew/redis-plus-plus
+- xml
 
 ## API 列表
 ### 1、query_user_list 查询用户列表
