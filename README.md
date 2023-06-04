@@ -9,6 +9,7 @@
 - 数据库连接池
 - https://github.com/sewenew/redis-plus-plus
 - xml
+- 正则
 
 ## API 列表
 ### 1、query_user_list 查询用户列表
