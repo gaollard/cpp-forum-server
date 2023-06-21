@@ -19,5 +19,5 @@ void generic_handler(struct evhttp_request *req, void *arg) {
     sprintf(tmp, "post_data=%s\n", post_data);
     strcat(output, tmp);
 
-    send(req, (char*) "Testing String");
+    send(req, (char*) "hello world");
 }
