@@ -1,0 +1,1 @@
+sudo docker image build -f docker/Dockerfile -t gaollard/ubuntu-gcc-service .

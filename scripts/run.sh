@@ -1,0 +1,2 @@
+cd www
+./main
