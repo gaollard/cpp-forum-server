@@ -8,6 +8,7 @@
 - boost
 - 数据库连接池
 - https://github.com/sewenew/redis-plus-plus
+- 正则
 
 ## API 列表
 ### 1、query_user_list 查询用户列表
@@ -21,7 +22,7 @@ curl -X POST localhost:8080/account/login \
 --data-raw '{"account": "admin", "password": "123456"}'
 ```
 
-### register_action 注册
+### 3、register_action 注册
 ```shell
 curl -X POST localhost:8080/account/register \
 --data-raw '{"account": "admin", "password": "123456"}'
