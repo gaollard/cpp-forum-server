@@ -1,4 +1,4 @@
-# forum-powered-by-cpp
+# cpp-forum-server
 
 ```shell
 # 构建镜像
@@ -14,11 +14,8 @@ sh docker/docker-run.sh
 - mysqlclient
 - rapidjson
 - cppjson
-- redis client
-- boost
+- redis client https://github.com/sewenew/redis-plus-plus
 - 数据库连接池
-- https://github.com/sewenew/redis-plus-plus
-- 正则
 
 ## API 列表
 ### 1. query_user_list 查询用户列表
