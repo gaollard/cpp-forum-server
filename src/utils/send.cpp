@@ -9,9 +9,10 @@
 
 void send(struct evhttp_request *req, char* content) {
     // HTTP header
-    evhttp_add_header(req->output_headers, "Server", MYHTTPD_SIGNATURE);
+    evhttp_add_header(req->output_headers, "Server", MY_HTTPD_SIGNATURE);
     evhttp_add_header(req->output_headers, "Content-Type", "application/json;charset=UTF-8");
     evhttp_add_header(req->output_headers, "Connection", "close");
+    evhttp_add_header(req->output_headers, "Power-By", "lib event");
 
     struct evbuffer *buf;
     buf = evbuffer_new();

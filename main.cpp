@@ -13,11 +13,11 @@
 
 #define LOG_INFO    printf
 
-#include "src/routes/login_handler.h";
-#include "src/routes/get_user_info_handler.h";
-#include "src/routes/generic_handler.h";
-#include "src/routes/query_user_list.h";
-#include "src/routes/register_action.h";
+#include "src/routes/login_handler.h"
+#include "src/routes/get_user_info_handler.h"
+#include "src/routes/generic_handler.h"
+#include "src/routes/query_user_list.h"
+#include "src/routes/register_action.h"
 
 void show_help() {
     char *help = "http://localhost:8080\n"

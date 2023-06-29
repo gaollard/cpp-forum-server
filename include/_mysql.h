@@ -13,7 +13,7 @@
 #include <stdarg.h>
 #include <ctype.h>
 
-#include <mysql.h>   // MySQL数据库接口函数的头文件
+#include <mysql/mysql.h>   // MySQL数据库接口函数的头文件
 
 // 把文件filename加载到buffer中，必须确保buffer足够大。
 // 成功返回文件的大小，文件不存在或为空返回0。

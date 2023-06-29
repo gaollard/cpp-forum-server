@@ -1,2 +1,5 @@
-cd www
+pwd
+ls
+cd build
+ls
 ./main

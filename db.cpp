@@ -4,9 +4,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <mysql.h>
-#include <mysqld_error.h>
-#include <errmsg.h>
+#include <mysql/mysql.h>
+#include <mysql/mysqld_error.h>
+//#include <errmsg.h>
 
 int db_query()
 {

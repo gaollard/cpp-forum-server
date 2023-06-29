@@ -9,6 +9,6 @@
 #define LOG_DBG    printf
 #define LOG_ERR    printf
 
-#define MYHTTPD_SIGNATURE   "httpd v 0.0.1"
+#define MY_HTTPD_SIGNATURE   "libevent v 0.0.1"
 
 #endif //LIBEVENT_DEMO_COMMON_H
